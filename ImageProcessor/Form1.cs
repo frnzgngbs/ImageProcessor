@@ -20,7 +20,6 @@ namespace ImageProcessor
             this.Height = 400;
 
         }
-
         private void initialize(int x, int y, Color pixel)
         {
             processed.SetPixel(x, y, pixel);
@@ -43,6 +42,7 @@ namespace ImageProcessor
             pictureBox1.Image = loaded;
         }
 
+        // BASIC COPY
         private void cloneToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             processed = new Bitmap(loaded.Width, loaded.Height);
@@ -64,8 +64,6 @@ namespace ImageProcessor
             processed = new Bitmap(loaded.Width, loaded.Height);
             if (count == 0)
             {
-                processed = new Bitmap(loaded.Width, loaded.Height);
-
                 for (int x = 0; x < loaded.Width; x++)
                 {
                     for (int y = 0; y < loaded.Height; y++)
@@ -78,8 +76,6 @@ namespace ImageProcessor
             }
             else
             {
-                processed = new Bitmap(loaded.Width, loaded.Height);
-
                 for (int x = 0; x < loaded.Width; x++)
                 {
                     for (int y = 0; y < loaded.Height; y++)
@@ -93,6 +89,8 @@ namespace ImageProcessor
             pictureBox2.Image = processed;
         }
 
+
+        // GRAYSCALE
         private void grayscaleToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             processed = new Bitmap(loaded.Width, loaded.Height);
@@ -104,7 +102,7 @@ namespace ImageProcessor
                     for (int y = 0; y < loaded.Height; y++)
                     {
                         pixel = loaded.GetPixel(x, y);
-                        int grayScale = (byte)((pixel.R + pixel.G + pixel.B) / 3);
+                        int grayScale = ((pixel.R + pixel.G + pixel.B) / 3);    
                         initializeGrayScale(x, y, grayScale);
                     }
                 }
@@ -121,6 +119,38 @@ namespace ImageProcessor
                     }
                 }
                 _isGray = false;
+            }
+            pictureBox2.Image = processed;
+        }
+
+        // INVERSION
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for (int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    Color invertedColor = Color.FromArgb(255 - pixel.R, 255 - pixel.G, 255 - pixel.B);
+                    processed.SetPixel(x, y, invertedColor);
+                }
+            }
+            pictureBox2.Image = processed;
+        }
+
+        // VERTICAL
+        private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = new Bitmap(loaded.Width, loaded.Height);
+
+            for (int x = 0; x < loaded.Width; x++)
+            {
+                for(int y = 0; y < loaded.Height; y++)
+                {
+                    pixel = loaded.GetPixel(x, y);
+                    processed.SetPixel(x, loaded.Height - y - 1, pixel);
+                }
             }
             pictureBox2.Image = processed;
         }

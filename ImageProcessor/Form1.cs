@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using HNUDIP;
+using WebCamLib;
 
 namespace ImageProcessor
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form   
     {
         Color pixel;
         Bitmap loaded;
@@ -18,8 +20,8 @@ namespace ImageProcessor
         {
             InitializeComponent();
 
-            this.Width = 600;
-            this.Height = 400;
+            this.Width = 1050;
+            this.Height = 600;
 
             if (processed == null && loaded == null)
             {
@@ -312,6 +314,141 @@ namespace ImageProcessor
                 _isSepia = false;
             }
             pictureBox2.Image = processed;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        Bitmap imageA, imageB, imageC;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                String file_name = openDialog.FileName;
+                imageA = new Bitmap(file_name);
+
+                pictureBox1.Image = imageA;
+                loadedImage();
+
+            }
+        }
+
+        
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                String file_name = openDialog.FileName;
+                imageB = new Bitmap(file_name);
+
+                pictureBox2.Image = imageB;
+                loadedImage();
+
+            }
+        }
+
+        private void btnSubtract_Click(object sender, EventArgs e)
+        {
+
+            Color myGreen = Color.FromArgb(0, 255, 0);
+            int greygreen = (myGreen.R + myGreen.G + myGreen.B) / 3;
+            int threshold = 5;
+
+            imageC = new Bitmap(imageB.Width, imageB.Width);
+
+            for(int x = 0; x < imageA.Width; x++)
+            {
+                for(int y = 0; y < imageA.Height; y++)
+                {
+                    Color new_pixel = imageA.GetPixel(x, y);
+                    Color backpixel = imageB.GetPixel(x, y);
+                    int grey = (new_pixel.R + new_pixel.G + new_pixel.B) / 3;
+                    int subtractvalue = Math.Abs(grey - greygreen);
+
+                    if (subtractvalue > threshold)
+                        imageC.SetPixel(x, y, new_pixel);
+                    else
+                        imageC.SetPixel(x, y, backpixel);
+
+                }
+            }
+            pictureBox3.Image = imageC;
+        }
+
+        Device[] devices = DeviceManager.GetAllDevices();
+        Device cam = DeviceManager.GetDevice(0);
+        Boolean isSubtract = false;
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+
+            int threshold = 100;
+
+            if (data != null)
+            {
+                bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+
+                // Check if the retrieved data is a valid image
+                if (bmap != null)
+                {
+                    Bitmap b = new Bitmap(bmap);
+
+                    ImageProcess2.BitmapFilter.Subtract(b, imageB, Color.Green, threshold);
+
+                    pictureBox3.Image = b;
+                }
+                else
+                {
+                    // Handle case where clipboard data is not a valid image
+                    Console.WriteLine("Clipboard data is not a valid image.");
+                }
+            }
+            else
+            {
+                // Handle case where clipboard data is not available
+                Console.WriteLine("Clipboard data is not available.");
+            }
+        }
+
+        private void btnVidSubtract_Click(object sender, EventArgs e)
+        {
+            isSubtract = !isSubtract;
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+            bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+
+            if (imageB != null && bmap.Size == imageB.Size)
+            {
+                timer1.Enabled = isSubtract;
+            }
+            else if(imageB == null)
+            {
+                Console.WriteLine("Background is null");
+            }
+            else
+            {
+                Console.WriteLine(imageB.Size);
+                Console.WriteLine(imageB.Size); 
+            }
+        }
+
+        private void btnCamera_Click(object sender, EventArgs e)
+        {
+            cam.ShowWindow(pictureBox1);
         }
     }
 }

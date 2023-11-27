@@ -20,7 +20,7 @@ namespace ImageProcessor
         {
             InitializeComponent();
 
-            this.Width = 1050;
+            this.Width = 1300;
             this.Height = 600;
 
             if (processed == null && loaded == null)
@@ -215,48 +215,45 @@ namespace ImageProcessor
         {
             processed = new Bitmap(loaded.Width, loaded.Height);
 
-            for (int x = 0; x < loaded.Width; x++)
+            for (int i = 0; i < loaded.Width; i++)
             {
-                for (int y = 0; y < loaded.Height; y++)
+                for (int j = 0; j < loaded.Height; j++)
                 {
-                    Color pixel = loaded.GetPixel(x, y);
+                    Color pixel = loaded.GetPixel(i, j);
                     int gray = (pixel.R + pixel.G + pixel.B) / 3;
-                    processed.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
+                    processed.SetPixel(i, j, Color.FromArgb(gray, gray, gray));
                 }
             }
-                
+
             Color sample;
             int[] histData = new int[256];
 
-            for (int x = 0; x < loaded.Width; x++)
+            for (int i = 0; i < loaded.Width; i++)
             {
-                for (int y = 0; y < loaded.Height; y++)
+                for (int j = 0; j < loaded.Height; j++)
                 {
-                    sample = loaded.GetPixel(x, y);
+                    sample = loaded.GetPixel(i, j);
                     histData[sample.R] = histData[sample.R] + 1;
                 }
             }
-                
 
-            // Size of my histogram
-            Bitmap myData = new Bitmap(loaded.Width, loaded.Height);
-            for (int x = 0; x < loaded.Width; x++)
+            Bitmap myData = new Bitmap(256, 800);
+            for (int i = 0; i < 256; i++)
             {
-                for (int y = 0; y < loaded.Height; y++)
+                for (int j = 0; j < 800; j++)
                 {
-                    myData.SetPixel(x, y, Color.White);
+                    myData.SetPixel(i, j, Color.White);
                 }
             }
-                
-            for (int x = 0; x < loaded.Width; x++)
+
+            for (int i = 0; i < 256; i++)
             {
-                int temp = loaded.Height - 1;
-                for (int y = 0; y < Math.Min(histData[x] / 5, loaded.Height); y++)
+                for (int j = 0; j < Math.Min(histData[i] / 5, 800); j++)
                 {
-                    myData.SetPixel(x, temp - y, Color.Black);
+                    myData.SetPixel(i, 799 - j, Color.Black);
                 }
             }
-                
+
             pictureBox2.Image = myData;
         }
 
@@ -325,6 +322,8 @@ namespace ImageProcessor
 
         private void button1_Click(object sender, EventArgs e)
         {
+            btnVidSubtract.Enabled = false;
+            btnSubtract.Enabled = true;
             OpenFileDialog openDialog = new OpenFileDialog();
 
             if (openDialog.ShowDialog() == DialogResult.OK)
@@ -337,8 +336,6 @@ namespace ImageProcessor
 
             }
         }
-
-        
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -400,7 +397,6 @@ namespace ImageProcessor
             {
                 bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
 
-                // Check if the retrieved data is a valid image
                 if (bmap != null)
                 {
                     Bitmap b = new Bitmap(bmap);
@@ -411,14 +407,92 @@ namespace ImageProcessor
                 }
                 else
                 {
-                    // Handle case where clipboard data is not a valid image
-                    Console.WriteLine("Clipboard data is not a valid image.");
+                    Console.WriteLine("Clipboard data Image");
                 }
             }
             else
             {
-                // Handle case where clipboard data is not available
-                Console.WriteLine("Clipboard data is not available.");
+                Console.WriteLine("Clipboard data");
+            }
+        }
+
+        
+
+        private void btnCamGreyscale_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            timer2.Enabled = true;
+            timer3.Enabled = false;
+        }
+
+        private void btnInvert_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            timer2.Enabled = false;
+            timer3.Enabled = true;
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("HERE");
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+
+            if (data != null)
+            {
+                bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+
+                if (bmap != null)
+                {
+                    Bitmap b = new Bitmap(bmap);
+
+                    ImageProcess2.BitmapFilter.Invert(b);
+
+                    pictureBox3.Image = b;
+                    Console.WriteLine("HERE");
+                }
+                else
+                {
+                    Console.WriteLine("Clipboard Data Image");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Clipboard data.");
+            }
+        }
+
+        private void timer2_Tick_1(object sender, EventArgs e)
+        {
+            Console.WriteLine("HERE");
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+
+            if (data != null)
+            {
+                bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+
+                if (bmap != null)
+                {
+                    Bitmap b = new Bitmap(bmap);
+
+                    ImageProcess2.BitmapFilter.GrayScale(b);
+
+                    pictureBox3.Image = b;
+                    Console.WriteLine("HERE");
+                }
+                else
+                {
+                    Console.WriteLine("Clipboard Data Image");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Clipboard data");
             }
         }
 
@@ -434,20 +508,24 @@ namespace ImageProcessor
             if (imageB != null && bmap.Size == imageB.Size)
             {
                 timer1.Enabled = isSubtract;
+                timer2.Enabled = false;
+                timer3.Enabled = false;
             }
             else if(imageB == null)
-            {
+            {   
                 Console.WriteLine("Background is null");
             }
             else
             {
                 Console.WriteLine(imageB.Size);
-                Console.WriteLine(imageB.Size); 
+                Console.WriteLine(bmap.Size); 
             }
         }
 
         private void btnCamera_Click(object sender, EventArgs e)
         {
+            btnVidSubtract.Enabled = true;
+            btnSubtract.Enabled = false;
             cam.ShowWindow(pictureBox1);
         }
     }

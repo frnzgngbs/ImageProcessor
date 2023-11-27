@@ -44,16 +44,14 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnOpenBackground = new System.Windows.Forms.Button();
-            this.btnClone = new System.Windows.Forms.Button();
-            this.btnGreyscale = new System.Windows.Forms.Button();
-            this.btnInversion = new System.Windows.Forms.Button();
-            this.btnHistogram = new System.Windows.Forms.Button();
-            this.btnSepia = new System.Windows.Forms.Button();
             this.btnSubtract = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.btnCamera = new System.Windows.Forms.Button();
             this.btnVidSubtract = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.btnCamGreyscale = new System.Windows.Forms.Button();
+            this.btnInvert = new System.Windows.Forms.Button();
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -65,7 +63,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 28);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1269, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1330, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -76,7 +74,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(1269, 28);
+            this.menuStrip2.Size = new System.Drawing.Size(1330, 28);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -97,55 +95,55 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click_1);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // cloneToolStripMenuItem
             // 
             this.cloneToolStripMenuItem.Name = "cloneToolStripMenuItem";
-            this.cloneToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.cloneToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.cloneToolStripMenuItem.Text = "Clone";
             this.cloneToolStripMenuItem.Click += new System.EventHandler(this.cloneToolStripMenuItem_Click_1);
             // 
             // grayscaleToolStripMenuItem
             // 
             this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
-            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.grayscaleToolStripMenuItem.Text = "Grayscale";
             this.grayscaleToolStripMenuItem.Click += new System.EventHandler(this.grayscaleToolStripMenuItem_Click_1);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.testToolStripMenuItem.Text = "Inversion";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // histogramToolStripMenuItem
             // 
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.histogramToolStripMenuItem.Text = "Histogram";
             this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
             // 
             // sepiaToolStripMenuItem
             // 
             this.sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
-            this.sepiaToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.sepiaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.sepiaToolStripMenuItem.Text = "Sepia";
             this.sepiaToolStripMenuItem.Click += new System.EventHandler(this.sepiaToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(184, 54);
+            this.pictureBox1.Location = new System.Drawing.Point(72, 74);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(300, 284);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -154,7 +152,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(507, 55);
+            this.pictureBox2.Location = new System.Drawing.Point(433, 74);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(300, 284);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -163,16 +161,16 @@
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(870, 54);
+            this.pictureBox3.Location = new System.Drawing.Point(780, 55);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(300, 284);
+            this.pictureBox3.Size = new System.Drawing.Size(454, 327);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox3.TabIndex = 4;
             this.pictureBox3.TabStop = false;
             // 
             // btnOpen
             // 
-            this.btnOpen.Location = new System.Drawing.Point(209, 12);
+            this.btnOpen.Location = new System.Drawing.Point(94, 32);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(104, 36);
             this.btnOpen.TabIndex = 5;
@@ -182,7 +180,7 @@
             // 
             // btnOpenBackground
             // 
-            this.btnOpenBackground.Location = new System.Drawing.Point(580, 12);
+            this.btnOpenBackground.Location = new System.Drawing.Point(510, 32);
             this.btnOpenBackground.Name = "btnOpenBackground";
             this.btnOpenBackground.Size = new System.Drawing.Size(139, 36);
             this.btnOpenBackground.TabIndex = 6;
@@ -190,55 +188,9 @@
             this.btnOpenBackground.UseVisualStyleBackColor = true;
             this.btnOpenBackground.Click += new System.EventHandler(this.button2_Click);
             // 
-            // btnClone
-            // 
-            this.btnClone.Location = new System.Drawing.Point(31, 92);
-            this.btnClone.Name = "btnClone";
-            this.btnClone.Size = new System.Drawing.Size(104, 36);
-            this.btnClone.TabIndex = 7;
-            this.btnClone.Text = "Clone";
-            this.btnClone.UseVisualStyleBackColor = true;
-            // 
-            // btnGreyscale
-            // 
-            this.btnGreyscale.Location = new System.Drawing.Point(31, 134);
-            this.btnGreyscale.Name = "btnGreyscale";
-            this.btnGreyscale.Size = new System.Drawing.Size(104, 36);
-            this.btnGreyscale.TabIndex = 8;
-            this.btnGreyscale.Text = "Greyscale";
-            this.btnGreyscale.UseVisualStyleBackColor = true;
-            this.btnGreyscale.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // btnInversion
-            // 
-            this.btnInversion.Location = new System.Drawing.Point(31, 176);
-            this.btnInversion.Name = "btnInversion";
-            this.btnInversion.Size = new System.Drawing.Size(104, 36);
-            this.btnInversion.TabIndex = 9;
-            this.btnInversion.Text = "Inversion";
-            this.btnInversion.UseVisualStyleBackColor = true;
-            // 
-            // btnHistogram
-            // 
-            this.btnHistogram.Location = new System.Drawing.Point(31, 218);
-            this.btnHistogram.Name = "btnHistogram";
-            this.btnHistogram.Size = new System.Drawing.Size(104, 36);
-            this.btnHistogram.TabIndex = 10;
-            this.btnHistogram.Text = "Histogram";
-            this.btnHistogram.UseVisualStyleBackColor = true;
-            // 
-            // btnSepia
-            // 
-            this.btnSepia.Location = new System.Drawing.Point(31, 260);
-            this.btnSepia.Name = "btnSepia";
-            this.btnSepia.Size = new System.Drawing.Size(104, 36);
-            this.btnSepia.TabIndex = 11;
-            this.btnSepia.Text = "Sepia";
-            this.btnSepia.UseVisualStyleBackColor = true;
-            // 
             // btnSubtract
             // 
-            this.btnSubtract.Location = new System.Drawing.Point(891, 11);
+            this.btnSubtract.Location = new System.Drawing.Point(849, 12);
             this.btnSubtract.Name = "btnSubtract";
             this.btnSubtract.Size = new System.Drawing.Size(104, 36);
             this.btnSubtract.TabIndex = 12;
@@ -246,18 +198,9 @@
             this.btnSubtract.UseVisualStyleBackColor = true;
             this.btnSubtract.Click += new System.EventHandler(this.btnSubtract_Click);
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(31, 344);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(104, 36);
-            this.btnSave.TabIndex = 13;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            // 
             // btnCamera
             // 
-            this.btnCamera.Location = new System.Drawing.Point(340, 12);
+            this.btnCamera.Location = new System.Drawing.Point(243, 32);
             this.btnCamera.Name = "btnCamera";
             this.btnCamera.Size = new System.Drawing.Size(104, 36);
             this.btnCamera.TabIndex = 14;
@@ -267,7 +210,7 @@
             // 
             // btnVidSubtract
             // 
-            this.btnVidSubtract.Location = new System.Drawing.Point(1035, 12);
+            this.btnVidSubtract.Location = new System.Drawing.Point(959, 12);
             this.btnVidSubtract.Name = "btnVidSubtract";
             this.btnVidSubtract.Size = new System.Drawing.Size(114, 36);
             this.btnVidSubtract.TabIndex = 15;
@@ -279,20 +222,44 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick_1);
+            // 
+            // btnCamGreyscale
+            // 
+            this.btnCamGreyscale.Location = new System.Drawing.Point(1079, 13);
+            this.btnCamGreyscale.Name = "btnCamGreyscale";
+            this.btnCamGreyscale.Size = new System.Drawing.Size(114, 36);
+            this.btnCamGreyscale.TabIndex = 17;
+            this.btnCamGreyscale.Text = "Cam Greyscale";
+            this.btnCamGreyscale.UseVisualStyleBackColor = true;
+            this.btnCamGreyscale.Click += new System.EventHandler(this.btnCamGreyscale_Click);
+            // 
+            // btnInvert
+            // 
+            this.btnInvert.Location = new System.Drawing.Point(1199, 12);
+            this.btnInvert.Name = "btnInvert";
+            this.btnInvert.Size = new System.Drawing.Size(114, 36);
+            this.btnInvert.TabIndex = 18;
+            this.btnInvert.Text = "Cam Invert";
+            this.btnInvert.UseVisualStyleBackColor = true;
+            this.btnInvert.Click += new System.EventHandler(this.btnInvert_Click);
+            // 
+            // timer3
+            // 
+            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1269, 555);
+            this.ClientSize = new System.Drawing.Size(1330, 552);
+            this.Controls.Add(this.btnInvert);
+            this.Controls.Add(this.btnCamGreyscale);
             this.Controls.Add(this.btnVidSubtract);
             this.Controls.Add(this.btnCamera);
-            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnSubtract);
-            this.Controls.Add(this.btnSepia);
-            this.Controls.Add(this.btnHistogram);
-            this.Controls.Add(this.btnInversion);
-            this.Controls.Add(this.btnGreyscale);
-            this.Controls.Add(this.btnClone);
             this.Controls.Add(this.btnOpenBackground);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.pictureBox3);
@@ -331,16 +298,14 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnOpenBackground;
-        private System.Windows.Forms.Button btnClone;
-        private System.Windows.Forms.Button btnGreyscale;
-        private System.Windows.Forms.Button btnInversion;
-        private System.Windows.Forms.Button btnHistogram;
-        private System.Windows.Forms.Button btnSepia;
         private System.Windows.Forms.Button btnSubtract;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCamera;
         private System.Windows.Forms.Button btnVidSubtract;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Button btnCamGreyscale;
+        private System.Windows.Forms.Button btnInvert;
+        private System.Windows.Forms.Timer timer3;
     }
 }
 
